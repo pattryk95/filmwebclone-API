@@ -1,3 +1,6 @@
+using filmwebclone_API.Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +14,10 @@ builder.Services.AddCors(options =>
         policyBuilder.AllowAnyMethod().AllowAnyHeader().WithOrigins(builder.Configuration["AllowedOrigins"])
     );
 });
+
+builder.Services.AddDbContext<FilmwebCloneContext>(
+        option => option.UseSqlServer(builder.Configuration.GetConnectionString("FilmwebCloneConnectionString"))
+    );
 
 var app = builder.Build();
 
