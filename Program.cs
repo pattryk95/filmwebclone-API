@@ -1,4 +1,6 @@
 using filmwebclone_API.Entities;
+using filmwebclone_API.Services;
+using filmwebclone_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<FilmwebCloneContext>(
         option => option.UseSqlServer(builder.Configuration.GetConnectionString("FilmwebCloneConnectionString"))
     );
+
+builder.Services.AddScoped<IGenreService, GenreService>();
 
 var app = builder.Build();
 

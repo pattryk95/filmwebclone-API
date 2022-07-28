@@ -12,7 +12,8 @@ namespace filmwebclone_API.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            var genres = modelBuilder.Entity<Genre>();
+            genres.Property(g => g.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
         }
     }
 }
