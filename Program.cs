@@ -2,6 +2,7 @@ using filmwebclone_API.Entities;
 using filmwebclone_API.Services;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<FilmwebCloneContext>(
     );
 
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

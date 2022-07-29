@@ -1,4 +1,5 @@
 ﻿using filmwebclone_API.Entities;
+using filmwebclone_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace filmwebclone_API.Services.Interfaces
 {
     public interface IGenreService
     {
-        Task<IEnumerable<Genre>> GetAll();
-        Task<Genre> GetGenreById(int id);
-        Task<int> Create(Genre genre);
+        Task<IEnumerable<GenreDto>> GetAll();
+        Task<GenreDto> GetGenreById(int id);
+        Task<int> Create(GenreCreateDto genreCreateDto);
     }
 }

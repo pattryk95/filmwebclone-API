@@ -1,4 +1,5 @@
 ﻿using filmwebclone_API.Entities;
+using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,32 +16,32 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<GenreDto>>> GetAll()
         {
-            var genres = await _genreService.GetAll();
+            var genresDtos = await _genreService.GetAll();
 
-            return Ok(genres);
+            return Ok(genresDtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        public async Task<ActionResult<GenreDto>> Get([FromRoute] int id)
         {
-            var genre = await _genreService.GetGenreById(id);
+            var genreDto = await _genreService.GetGenreById(id);
 
-            if (genre is null)
+            if (genreDto is null)
             {
                 return NotFound();
             }
 
-            return Ok(genre);
+            return Ok(genreDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre([FromBody] Genre genre)
+        public async Task<IActionResult> CreateGenre([FromBody] GenreCreateDto genreCreateDto)
         {
-            var genreId = await _genreService.Create(genre);
+            var genreId = await _genreService.Create(genreCreateDto);
 
-            return Created($"api/genres/{genre.Id}", null);
+            return Created($"api/genres/{genreId}", null);
         }
     }
 }
