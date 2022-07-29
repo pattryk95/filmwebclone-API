@@ -1,4 +1,6 @@
+using filmwebclone_API.APIBehavior;
 using filmwebclone_API.Entities;
+using filmwebclone_API.Filters;
 using filmwebclone_API.Services;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(ParseBadRequest));
+}).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
 
 builder.Services.AddCors(options =>
 {
