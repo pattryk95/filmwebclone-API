@@ -19,7 +19,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontEndClient", policyBuilder =>
 
-        policyBuilder.AllowAnyMethod().AllowAnyHeader().WithOrigins(builder.Configuration["AllowedOrigins"])
+        policyBuilder.AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .WithOrigins(builder.Configuration["AllowedOrigins"])
+                     .WithExposedHeaders(new string[] { "totalAmountOfRecords" })
     );
 });
 
@@ -27,6 +30,7 @@ builder.Services.AddDbContext<FilmwebCloneContext>(
         option => option.UseSqlServer(builder.Configuration.GetConnectionString("FilmwebCloneConnectionString"))
     );
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

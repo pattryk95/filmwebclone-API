@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using filmwebclone_API.Entities;
 using filmwebclone_API.Models;
+using filmwebclone_API.Helpers;
 using filmwebclone_API.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace filmwebclone_API.Services
 {
@@ -11,15 +12,20 @@ namespace filmwebclone_API.Services
     {
         private readonly FilmwebCloneContext _dbContext;
         private readonly IMapper _mapper;
-        public GenreService(FilmwebCloneContext dbContext, IMapper mapper)
+        private readonly HttpContext _httpContext;
+        public GenreService(FilmwebCloneContext dbContext, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _httpContext = httpContext.HttpContext;
         }
 
-        public async Task<IEnumerable<GenreDto>> GetAll()
+        public async Task<IEnumerable<GenreDto>> GetAll(PaginationDto paginationDto)
         {
-            var genres = await _dbContext.Genres.ToListAsync();
+            var queryable = _dbContext.Genres.AsQueryable();
+            await _httpContext.InsertParametersPaginationInHeader(queryable);
+
+            var genres = await queryable.OrderBy(x=>x.Name).Paginate(paginationDto).ToListAsync();
             var genresDto = _mapper.Map<List<GenreDto>>(genres);
 
             return genresDto;

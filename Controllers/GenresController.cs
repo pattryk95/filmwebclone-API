@@ -1,5 +1,4 @@
-﻿using filmwebclone_API.Entities;
-using filmwebclone_API.Models;
+﻿using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +15,9 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GenreDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GenreDto>>> GetAll([FromQuery] PaginationDto paginationDto)
         {
-            var genresDtos = await _genreService.GetAll();
+            var genresDtos = await _genreService.GetAll(paginationDto);
 
             return Ok(genresDtos);
         }
