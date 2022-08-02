@@ -42,5 +42,17 @@ namespace filmwebclone_API.Controllers
 
             return Created($"api/genres/{genreId}", null);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditGenre([FromRoute] int id, [FromBody] GenreCreateDto dto)
+        {
+            var isUpdated = await _genreService.Edit(id, dto);
+
+            if (isUpdated == false)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

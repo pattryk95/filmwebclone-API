@@ -13,5 +13,6 @@ namespace filmwebclone_API.Services.Interfaces
         Task<IEnumerable<GenreDto>> GetAll(PaginationDto paginationDto);
         Task<GenreDto> GetGenreById(int id);
         Task<int> Create(GenreCreateDto genreCreateDto);
+        Task<bool> Edit(int id, GenreCreateDto dto);
     }
 }

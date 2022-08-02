@@ -34,6 +34,10 @@ namespace filmwebclone_API.Services
         public async Task<GenreDto> GetGenreById(int id)
         {
             var genre = await _dbContext.Genres.FirstOrDefaultAsync(g => g.Id == id);
+            if (genre is null)
+            {
+                return null;
+            }
             var genreDto = _mapper.Map<GenreDto>(genre);
 
             return genreDto;
@@ -46,6 +50,20 @@ namespace filmwebclone_API.Services
             await _dbContext.SaveChangesAsync();
 
             return genre.Id;
+        }
+
+        public async Task<bool> Edit(int id, GenreCreateDto dto)
+        {
+            var genre = await _dbContext.Genres.FirstOrDefaultAsync(g => g.Id == id);
+            if (genre is null)
+            {
+                return false;
+            }
+
+            genre = _mapper.Map(dto, genre);
+            await  _dbContext.SaveChangesAsync();
+
+            return true;
         }
 
     }
