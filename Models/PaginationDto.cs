@@ -12,16 +12,16 @@ namespace filmwebclone_API.Models
         
         private readonly int maxPageSize = 50;
 
-        private int _pageSize = 10;
-        public int PageSize
+        private int _recordsPerPage = 10;
+        public int RecordsPerPage
         {
             get
             {
-                return _pageSize;
+                return _recordsPerPage;
             }
             set
             {
-                _pageSize =  (value > maxPageSize) ? maxPageSize : value;
+                _recordsPerPage =  (value > maxPageSize) ? maxPageSize : value;
             }
         }
 

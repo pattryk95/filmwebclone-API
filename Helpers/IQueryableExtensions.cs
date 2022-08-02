@@ -12,8 +12,8 @@ namespace filmwebclone_API.Helpers
         public static IQueryable<T> Paginate<T>(this IQueryable<T> queryable, PaginationDto paginationDto)
         {
             return queryable
-                            .Skip((paginationDto.PageNumber - 1) * paginationDto.PageSize)
-                            .Take(paginationDto.PageSize);
+                            .Skip((paginationDto.PageNumber - 1) * paginationDto.RecordsPerPage)
+                            .Take(paginationDto.RecordsPerPage);
         }
     }
 }
