@@ -25,7 +25,7 @@ namespace filmwebclone_API.Services
             var queryable = _dbContext.Genres.AsQueryable();
             await _httpContext.InsertParametersPaginationInHeader(queryable);
 
-            var genres = await queryable.OrderBy(x=>x.Name).Paginate(paginationDto).ToListAsync();
+            var genres = await queryable.OrderBy(x => x.Name).Paginate(paginationDto).ToListAsync();
             var genresDto = _mapper.Map<List<GenreDto>>(genres);
 
             return genresDto;
@@ -61,9 +61,27 @@ namespace filmwebclone_API.Services
             }
 
             genre = _mapper.Map(dto, genre);
-            await  _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var genreExists = await _dbContext.Genres.AnyAsync(g => g.Id == id);
+            if (!genreExists)
+            {
+                return false;
+            }
+
+            _dbContext.Remove(new Genre()
+            {
+                Id = id,
+            });
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+
         }
 
     }

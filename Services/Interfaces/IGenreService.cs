@@ -14,5 +14,6 @@ namespace filmwebclone_API.Services.Interfaces
         Task<GenreDto> GetGenreById(int id);
         Task<int> Create(GenreCreateDto genreCreateDto);
         Task<bool> Edit(int id, GenreCreateDto dto);
+        Task<bool> Delete(int id);
     }
 }

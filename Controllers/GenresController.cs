@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace filmwebclone_API.Controllers
 {
     [Route("api/genres")]
-    [ApiController]
+    [ApiController] // for model validation
     public class GenresController : ControllerBase
     {
         private readonly IGenreService _genreService;
@@ -36,7 +36,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre([FromBody] GenreCreateDto genreCreateDto)
+        public async Task<ActionResult> CreateGenre([FromBody] GenreCreateDto genreCreateDto)
         {
             var genreId = await _genreService.Create(genreCreateDto);
 
@@ -53,6 +53,18 @@ namespace filmwebclone_API.Controllers
                 return NotFound();
             }
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGenre([FromRoute] int id)
+        {
+            var isDeleted = await _genreService.Delete(id);
+
+            if (isDeleted == false)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }
