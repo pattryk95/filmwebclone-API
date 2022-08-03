@@ -32,6 +32,7 @@ builder.Services.AddDbContext<FilmwebCloneContext>(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();

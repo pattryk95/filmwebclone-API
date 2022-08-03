@@ -16,6 +16,10 @@ namespace filmwebclone_API.Helpers
             CreateMap<Genre, GenreDto>().ReverseMap();
             //                .ForMember(m => m.Name, c => c.MapFrom(s => s.Name));
             CreateMap<GenreCreateDto, Genre>();
+
+            CreateMap<Actor, ActorDto>().ReverseMap();
+            CreateMap<ActorCreateDto, Actor>()
+                .ForMember(x => x.Picture, options => options.Ignore());
         }
     }
 }

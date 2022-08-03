@@ -9,6 +9,7 @@ namespace filmwebclone_API.Entities
 
         }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Actor> Actors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -16,7 +17,11 @@ namespace filmwebclone_API.Entities
             //genres.Property(g => g.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
 
             modelBuilder.Entity<Genre>(
-                eb => eb.Property(g => g.Name).HasColumnType("varchar(50)")
+                eb => eb.Property(g => g.Name).HasColumnType("varchar(50)").IsRequired()
+                );
+
+            modelBuilder.Entity<Actor>(
+                eb => eb.Property(a => a.Name).IsRequired().HasColumnType("varchar(120)")
                 );
         }
     }
