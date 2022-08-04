@@ -39,7 +39,7 @@ namespace filmwebclone_API.Controllers
             return Ok(actorDto);
         }
         [HttpPost]
-        public async Task<ActionResult> CreateActor([FromBody] ActorCreateDto actorCreateDto)
+        public async Task<ActionResult> CreateActor([FromForm] ActorCreateDto actorCreateDto)
         {
             var actorId = await _actorService.Create(actorCreateDto);
 
@@ -47,7 +47,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditActor([FromRoute] int id, [FromBody] ActorCreateDto dto)
+        public async Task<IActionResult> EditActor([FromRoute] int id, [FromForm] ActorCreateDto dto)
         {
             var isUpdated = await _actorService.Edit(id, dto);
 
