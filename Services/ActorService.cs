@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using filmwebclone_API.Entities;
+using filmwebclone_API.Helpers;
 using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,14 @@ namespace filmwebclone_API.Services
     {
         private readonly FilmwebCloneContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
+        private readonly string containerName = "actors";
 
-        public ActorService(FilmwebCloneContext dbContext, IMapper mapper)
+        public ActorService(FilmwebCloneContext dbContext, IMapper mapper, IFileStorageService fileStorageService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _fileStorageService = fileStorageService;
         }
 
         public async Task<IEnumerable<ActorDto>> GetAll()
@@ -44,6 +48,10 @@ namespace filmwebclone_API.Services
         public async Task<int> Create(ActorCreateDto actorCreateDto)
         {
             var actor = _mapper.Map<Actor>(actorCreateDto);
+            if (actorCreateDto.Picture != null)
+            {
+                actor.Picture = await _fileStorageService.SaveFile(containerName, actorCreateDto.Picture);
+            }
             _dbContext.Actors.Add(actor);
             await _dbContext.SaveChangesAsync();
 

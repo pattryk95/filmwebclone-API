@@ -1,6 +1,7 @@
 using filmwebclone_API.APIBehavior;
 using filmwebclone_API.Entities;
 using filmwebclone_API.Filters;
+using filmwebclone_API.Helpers;
 using filmwebclone_API.Services;
 using filmwebclone_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -34,11 +35,14 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddScoped<IFileStorageService, LocalStorageService>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseStaticFiles();
 app.UseCors("FrontEndClient");
 
 app.UseHttpsRedirection();
