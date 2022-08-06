@@ -19,15 +19,13 @@ namespace filmwebclone_API.Entities
             modelBuilder.Entity<Genre>(
                 eb => eb.Property(g => g.Name).HasColumnType("varchar(50)").IsRequired()
                 );
-            modelBuilder.Entity<Actor>(
-                eb => eb.Property(a => a.FirstName).IsRequired().HasColumnType("varchar(120)")
-                );
-            modelBuilder.Entity<Actor>(
-                eb => eb.Property(a => a.MiddleName).HasColumnType("varchar(120)")
-                );
-            modelBuilder.Entity<Actor>(
-                eb => eb.Property(a => a.LastName).IsRequired().HasColumnType("varchar(120)")
-                );
+            modelBuilder.Entity<Actor>(eb =>
+            {
+
+                eb.Property(a => a.FirstName).IsRequired().HasColumnType("varchar(120)");
+                eb.Property(a => a.MiddleName).HasColumnType("varchar(120)");
+                eb.Property(a => a.LastName).IsRequired().HasColumnType("varchar(120)");
+            });
         }
     }
 }

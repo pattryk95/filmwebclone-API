@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using filmwebclone_API.Entities;
 
@@ -11,9 +12,10 @@ using filmwebclone_API.Entities;
 namespace filmwebclone_API.Migrations
 {
     [DbContext(typeof(FilmwebCloneContext))]
-    partial class FilmwebCloneContextModelSnapshot : ModelSnapshot
+    [Migration("20220806151715_MakeMiddleNameNullable")]
+    partial class MakeMiddleNameNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,7 @@ namespace filmwebclone_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -48,6 +51,7 @@ namespace filmwebclone_API.Migrations
                         .HasColumnType("varchar(120)");
 
                     b.Property<string>("Picture")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
