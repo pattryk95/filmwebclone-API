@@ -18,17 +18,22 @@ namespace filmwebclone_API.Services
         private readonly IMapper _mapper;
         private readonly IFileStorageService _fileStorageService;
         private readonly string containerName = "actors";
+        private readonly HttpContext _httpContext;
 
-        public ActorService(FilmwebCloneContext dbContext, IMapper mapper, IFileStorageService fileStorageService)
+        public ActorService(FilmwebCloneContext dbContext, IMapper mapper, IFileStorageService fileStorageService, IHttpContextAccessor httpContext)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _fileStorageService = fileStorageService;
+            _httpContext = httpContext.HttpContext;
         }
 
-        public async Task<IEnumerable<ActorDto>> GetAll()
+        public async Task<IEnumerable<ActorDto>> GetAll(PaginationDto paginationDto)
         {
-            var actors = await _dbContext.Actors.ToListAsync();
+            var queryable = _dbContext.Actors.AsQueryable();
+            await _httpContext.InsertParametersPaginationInHeader(queryable);
+
+            var actors = await queryable.OrderBy(a => a.LastName).Paginate(paginationDto).ToListAsync();
             var actorsDtos = _mapper.Map<List<ActorDto>>(actors);
 
             return actorsDtos;

@@ -11,7 +11,13 @@ namespace filmwebclone_API.Models
     {
         [Required]
         [StringLength(120)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        [StringLength(120)]
+        public string MiddleName { get; set; }
+        [Required]
+        [StringLength(120)]
+        public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Biography { get; set; }
         public IFormFile Picture { get; set; }

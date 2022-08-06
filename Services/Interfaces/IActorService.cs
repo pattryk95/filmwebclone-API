@@ -9,7 +9,7 @@ namespace filmwebclone_API.Services.Interfaces
 {
     public interface IActorService
     {
-        Task<IEnumerable<ActorDto>> GetAll();
+        Task<IEnumerable<ActorDto>> GetAll(PaginationDto paginationDto);
         Task<ActorDto> GetActorById(int id);
         Task<int> Create(ActorCreateDto actorCreateDto);
         Task<bool> Edit(int id, ActorCreateDto dto);

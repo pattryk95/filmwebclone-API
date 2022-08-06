@@ -21,9 +21,9 @@ namespace filmwebclone_API.Controllers
             _actorService = actorService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetAll([FromQuery] PaginationDto paginationDto)
         {
-            var actorDtos = await _actorService.GetAll();
+            var actorDtos = await _actorService.GetAll(paginationDto);
 
             return Ok(actorDtos);
         }
