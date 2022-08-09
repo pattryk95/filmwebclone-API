@@ -87,17 +87,15 @@ namespace filmwebclone_API.Services
 
         public async Task<bool> Delete(int id)
         {
-            var actorExists = await _dbContext.Actors.AnyAsync(a => a.Id == id);
-            if (!actorExists)
+            var actor = await _dbContext.Actors.FirstOrDefaultAsync(a => a.Id == id);
+            if (actor is null)
             {
                 return false;
             }
 
-            _dbContext.Remove(new Actor()
-            {
-                Id = id,
-            });
+            _dbContext.Actors.Remove(actor);
             await _dbContext.SaveChangesAsync();
+            await _fileStorageService.DeleteFile(actor.Picture, containerName);
 
             return true;
 
