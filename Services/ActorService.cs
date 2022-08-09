@@ -72,6 +72,14 @@ namespace filmwebclone_API.Services
             }
 
             actor = _mapper.Map(dto, actor);
+
+            if (dto.Picture != null)
+            {
+                actor.Picture = await _fileStorageService.EditFile(containerName,
+                                                                    dto.Picture,
+                                                                    actor.Picture);
+            }
+
             await _dbContext.SaveChangesAsync();
 
             return true;
