@@ -10,6 +10,7 @@ namespace filmwebclone_API.Entities
         }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Actor> Actors { get; set; }
+        public DbSet<MovieTheater> MovieTheaters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,10 @@ namespace filmwebclone_API.Entities
                 eb.Property(a => a.MiddleName).HasColumnType("varchar(120)");
                 eb.Property(a => a.LastName).IsRequired().HasColumnType("varchar(120)");
             });
+            modelBuilder.Entity<MovieTheater>(
+                eb => eb.Property(g => g.Name).HasColumnType("varchar(75)").IsRequired()
+                );
+
         }
     }
 }
