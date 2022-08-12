@@ -12,5 +12,8 @@ namespace filmwebclone_API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public Point Location { get; set; }
+
+        public List<Movie> Movies { get; set; }
+
     }
 }

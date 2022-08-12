@@ -22,5 +22,8 @@ namespace filmwebclone_API.Entities
         public DateTime DateOfBirth { get; set; }
         public string? Biography { get; set; }
         public string? Picture { get; set; }
+
+        public List<Movie> Movies { get; set; }
+
     }
 }
