@@ -19,5 +19,7 @@ namespace filmwebclone_API.Entities
         public List<Genre> Genres { get; set; }
         public List<MovieTheater> MovieTheaters { get; set; }
         public List<Actor> Actors { get; set; }
+
+        public List<MoviesActors> MoviesActors { get; set; }
     }
 }

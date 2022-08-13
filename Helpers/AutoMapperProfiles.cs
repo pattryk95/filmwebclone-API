@@ -29,6 +29,9 @@ namespace filmwebclone_API.Helpers
             CreateMap<MovieTheaterCreateDto, MovieTheater>()
                 .ForMember(x => x.Location, x => x.MapFrom(dto => 
                 geometryFactory.CreatePoint(new Coordinate(dto.Longitude, dto.Latitude))));
+
+            CreateMap<MovieCreateDto, Movie>()
+                .ForMember(x => x.Poster, options => options.Ignore());
         }
     }
 }
