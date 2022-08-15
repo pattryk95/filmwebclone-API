@@ -10,5 +10,7 @@ namespace filmwebclone_API.Services.Interfaces
     public interface IMovieService
     {
         Task<int> Create(MovieCreateDto movieCreateDto);
+        Task<List<MovieTheaterDto>> GetAllMovieTheaters();
+        Task<List<GenreDto>> GetAllGenres();
     }
 }

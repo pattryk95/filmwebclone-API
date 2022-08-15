@@ -15,9 +15,22 @@ namespace filmwebclone_API.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, IMovietheaterService movieTheatersService)
         {
             _movieService = movieService;
+        }
+
+        [HttpGet("PostGet")]
+        public async Task<ActionResult<MoviePostGetDto>> PostGet()
+        {
+            var movieTheatersDto = await _movieService.GetAllMovieTheaters();
+            var genresDto = await _movieService.GetAllGenres();
+
+            return new MoviePostGetDto()
+            {
+                Genres = genresDto,
+                MovieTheaters = movieTheatersDto
+            };
         }
 
         [HttpPost]

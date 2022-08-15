@@ -32,6 +32,7 @@ namespace filmwebclone_API.Helpers
 
             CreateMap<MovieCreateDto, Movie>()
                 .ForMember(x => x.Poster, options => options.Ignore());
+
         }
     }
 }

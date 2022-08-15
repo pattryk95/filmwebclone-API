@@ -19,7 +19,7 @@ namespace filmwebclone_API.Models
 
         
         [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
-        public List<int> GenresIds { get; set; }
+        public List<int> GenresId { get; set; }
 
         [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
         public List<int> MovieTheatersId { get; set; }

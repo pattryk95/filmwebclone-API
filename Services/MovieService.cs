@@ -44,6 +44,23 @@ namespace filmwebclone_API.Services
 
             return movie.Id;
         }
+        public async Task<List<MovieTheaterDto>> GetAllMovieTheaters()
+        {
+            var movieTheaters = await _dbContext.MovieTheaters.ToListAsync();
+
+            var movieTheatersDto = _mapper.Map<List<MovieTheaterDto>>(movieTheaters);
+
+            return movieTheatersDto;
+        }
+
+        public async Task<List<GenreDto>> GetAllGenres()
+        {
+            var genres = await _dbContext.Genres.ToListAsync();
+
+            var genresDto = _mapper.Map<List<GenreDto>>(genres);
+
+            return genresDto;
+        }
 
         private void AnnotateActorsOrder(Movie movie)
         {

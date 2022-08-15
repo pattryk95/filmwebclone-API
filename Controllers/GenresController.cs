@@ -17,9 +17,9 @@ namespace filmwebclone_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GenreDto>>> GetAll([FromQuery] PaginationDto paginationDto)
         {
-            var genresDtos = await _genreService.GetAll(paginationDto);
+            var genresDto = await _genreService.GetAll(paginationDto);
 
-            return Ok(genresDtos);
+            return Ok(genresDto);
         }
 
         [HttpGet("{id}")]
