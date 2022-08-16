@@ -39,6 +39,14 @@ namespace filmwebclone_API.Controllers
 
             return Ok(actorDto);
         }
+
+        [HttpGet("searchByName/{query}")]
+        public async Task<ActionResult<IEnumerable<ActorsMovieDto>>> SearchByName(string query)
+        {
+            var actorsDto = await _actorService.SearchByName(query); 
+            return Ok(actorsDto);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateActor([FromForm] ActorCreateDto actorCreateDto)
         {

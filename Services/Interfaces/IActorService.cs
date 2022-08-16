@@ -11,6 +11,7 @@ namespace filmwebclone_API.Services.Interfaces
     {
         Task<IEnumerable<ActorDto>> GetAll(PaginationDto paginationDto);
         Task<ActorDto> GetActorById(int id);
+        Task<IEnumerable<ActorsMovieDto>> SearchByName(string query);
         Task<int> Create(ActorCreateDto actorCreateDto);
         Task<bool> Edit(int id, ActorCreateDto dto);
         Task<bool> Delete(int id);

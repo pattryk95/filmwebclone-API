@@ -50,6 +50,23 @@ namespace filmwebclone_API.Services
 
             return actorDto;
         }
+
+        public async Task<IEnumerable<ActorsMovieDto>> SearchByName(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return new List<ActorsMovieDto>();
+            }
+            var actorsMovieDto = await _dbContext.Actors
+                                        .Where(x => x.FirstName.Contains(query) || x.MiddleName.Contains(query) || x.LastName.Contains(query))
+                                        .OrderBy(x => x.FirstName)
+                                        .Select(x => new ActorsMovieDto { Id = x.Id, Name = x.FirstName + " " + x.MiddleName + " " + x.LastName, Picture = x.Picture })
+                                        .Take(5)
+                                        .ToListAsync();
+
+            return actorsMovieDto;
+
+        }
         public async Task<int> Create(ActorCreateDto actorCreateDto)
         {
             var actor = _mapper.Map<Actor>(actorCreateDto);
