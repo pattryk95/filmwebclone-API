@@ -60,7 +60,7 @@ namespace filmwebclone_API.Services
             var actorsMovieDto = await _dbContext.Actors
                                         .Where(x => x.FirstName.Contains(query) || x.MiddleName.Contains(query) || x.LastName.Contains(query))
                                         .OrderBy(x => x.FirstName)
-                                        .Select(x => new ActorsMovieDto { Id = x.Id, Name = x.FirstName + " " + x.MiddleName + " " + x.LastName, Picture = x.Picture })
+                                        .Select(x => new ActorsMovieDto { Id = x.Id, FirstName = x.FirstName, MiddleName = x.MiddleName, LastName = x.LastName, Picture = x.Picture })
                                         .Take(5)
                                         .ToListAsync();
 

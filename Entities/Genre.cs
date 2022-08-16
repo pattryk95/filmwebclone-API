@@ -9,7 +9,6 @@ namespace filmwebclone_API.Entities
         [FirstLetterUppercase]
         public string Name { get; set; }
 
-        public List<Movie> Movies { get; set; }
-
+        public List<MoviesGenres> MoviesGenres { get; set; } = new List<MoviesGenres>();
     }
 }

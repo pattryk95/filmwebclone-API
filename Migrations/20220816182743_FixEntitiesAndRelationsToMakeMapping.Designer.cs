@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using filmwebclone_API.Entities;
@@ -12,9 +13,10 @@ using filmwebclone_API.Entities;
 namespace filmwebclone_API.Migrations
 {
     [DbContext(typeof(FilmwebCloneContext))]
-    partial class FilmwebCloneContextModelSnapshot : ModelSnapshot
+    [Migration("20220816182743_FixEntitiesAndRelationsToMakeMapping")]
+    partial class FixEntitiesAndRelationsToMakeMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

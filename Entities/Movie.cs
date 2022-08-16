@@ -16,10 +16,8 @@ namespace filmwebclone_API.Entities
         public DateTime ReleaseDate { get; set; }
         public string Poster { get; set; }
 
-        public List<Genre> Genres { get; set; }
-        public List<MovieTheater> MovieTheaters { get; set; }
-        public List<Actor> Actors { get; set; }
-
+        public List<MoviesGenres> MoviesGenres { get; set; }
+        public List<MovieTheatersMovies> MovieTheatersMovies { get; set; }
         public List<MoviesActors> MoviesActors { get; set; }
     }
 }

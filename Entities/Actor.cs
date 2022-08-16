@@ -23,7 +23,7 @@ namespace filmwebclone_API.Entities
         public string? Biography { get; set; }
         public string? Picture { get; set; }
 
-        public List<Movie> Movies { get; set; }
+        public List<MoviesActors> MoviesActors { get; set; } = new List<MoviesActors>();
 
     }
 }

@@ -38,7 +38,7 @@ namespace filmwebclone_API.Controllers
         {
             var movieId = await _movieService.Create(movieCreateDto);
 
-            return Created($"api/movies/{movieId}", null);
+            return Created($"api/movies/{movieId}", movieId);
         }
     }
 }

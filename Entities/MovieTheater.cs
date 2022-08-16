@@ -13,7 +13,6 @@ namespace filmwebclone_API.Entities
         public string Name { get; set; }
         public Point Location { get; set; }
 
-        public List<Movie> Movies { get; set; }
-
+        public List<MovieTheatersMovies> MovieTheatersMovies { get; set; } = new List<MovieTheatersMovies>();
     }
 }
