@@ -96,6 +96,7 @@ namespace filmwebclone_API.Helpers
                         FirstName = moviesActors.Actor.FirstName,
                         MiddleName = moviesActors.Actor.MiddleName,
                         LastName = moviesActors.Actor.LastName,
+                        Character = moviesActors.Character,
                         Picture = moviesActors.Actor.Picture,
                         Order = moviesActors.Order
                     });
