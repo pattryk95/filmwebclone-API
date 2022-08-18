@@ -29,6 +29,31 @@ namespace filmwebclone_API.Services
 
         }
 
+        public async Task<LandingPageDto> GetAllMovies()
+        {
+            var top = 6;
+            var today = DateTime.Today;
+
+            var upcomingReleases = await _dbContext.Movies
+                .Where(x => x.ReleaseDate > today)
+                .OrderBy(x => x.ReleaseDate)
+                .Take(top)
+                .ToListAsync();
+
+            var inTheaters = await _dbContext.Movies
+                .Where(x => x.InTheaters)
+                .OrderBy(x => x.ReleaseDate)
+                .Take(top)
+                .ToListAsync();
+
+            var landingPageDto = new LandingPageDto();
+
+            landingPageDto.Upcoming = _mapper.Map<List<MovieDto>>(upcomingReleases);
+            landingPageDto.InTheaters = _mapper.Map<List<MovieDto>>(inTheaters);
+
+            return landingPageDto;
+        }
+
         public async Task<MovieDto> GetMovieById(int id)
         {
             var movie = await _dbContext.Movies

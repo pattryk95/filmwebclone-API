@@ -20,6 +20,14 @@ namespace filmwebclone_API.Controllers
             _movieService = movieService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<LandingPageDto>>> GetAll()
+        {
+            var landingPageDto = await _movieService.GetAllMovies();
+
+            return Ok(landingPageDto);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieDto>> GetMovie([FromRoute] int id)
         {
