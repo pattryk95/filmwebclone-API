@@ -29,6 +29,22 @@ namespace filmwebclone_API.Services
 
         }
 
+        public async Task<MovieDto> GetMovieById(int id)
+        {
+            var movie = await _dbContext.Movies
+                .Include(x => x.MoviesGenres).ThenInclude(x => x.Genre)
+                .Include(x => x.MovieTheatersMovies).ThenInclude(x => x.MovieTheater)
+                .Include(x => x.MoviesActors).ThenInclude(x => x.Actor)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (movie == null)
+            {
+                return null;
+            }
+            var movieDto = _mapper.Map<MovieDto>(movie);
+            movieDto.Actors = movieDto.Actors.OrderBy(x=> x.Order).ToList();
+            return movieDto;
+        }
+
         public async Task<int> Create(MovieCreateDto movieCreateDto)
         {
             var movie = _mapper.Map<Movie>(movieCreateDto);

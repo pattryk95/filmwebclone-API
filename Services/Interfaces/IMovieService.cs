@@ -12,5 +12,6 @@ namespace filmwebclone_API.Services.Interfaces
         Task<int> Create(MovieCreateDto movieCreateDto);
         Task<List<MovieTheaterDto>> GetAllMovieTheaters();
         Task<List<GenreDto>> GetAllGenres();
+        Task<MovieDto> GetMovieById(int id);
     }
 }
