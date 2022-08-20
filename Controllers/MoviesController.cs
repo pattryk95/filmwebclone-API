@@ -54,6 +54,27 @@ namespace filmwebclone_API.Controllers
             };
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MoviePutGetDto>> PutGet(int id)
+        {
+            var response = await _movieService.PutGet(id);
+
+            return response;
+        }
+
+        [HttpPut("id")]
+        public async Task<ActionResult> EditMovie(int id, [FromForm] MovieCreateDto dto)
+        {
+
+            var isUpdated = await _movieService.Edit(id, dto);
+
+            if (isUpdated == false)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateMovie([FromForm] MovieCreateDto movieCreateDto)
         {

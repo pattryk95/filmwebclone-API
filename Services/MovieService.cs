@@ -103,6 +103,69 @@ namespace filmwebclone_API.Services
             return genresDto;
         }
 
+        public async Task<MoviePutGetDto> PutGet(int id)
+        {
+            var movieDto = await GetMovieById(id);
+            if (movieDto == null)
+            {
+                return null;
+            }
+
+            var genresSelectedIds = movieDto.Genres.Select(x => x.Id).ToList();
+
+            var allGenres = await GetAllGenres();
+            var nonSelectedGenres = allGenres.Where(x => !genresSelectedIds.Contains(x.Id)).ToList();
+
+
+
+            var movieTheatersIds = movieDto.MovieTheaters.Select(x => x.Id).ToList();
+
+            var allMovieTheaters = await GetAllMovieTheaters();
+            var nonSelectedMovieTheaters = allMovieTheaters.Where(x => !movieTheatersIds.Contains(x.Id)).ToList();
+
+            var nonSelectedGenresDtos = _mapper.Map<List<GenreDto>>(nonSelectedGenres);
+            var nonSelectedMovieTheatersDto = _mapper.Map<List<MovieTheaterDto>>(nonSelectedMovieTheaters);
+
+            var response = new MoviePutGetDto();
+            response.Movie = movieDto;
+            response.SelectedGenres = movieDto.Genres;
+            response.NonSelectedGenres = nonSelectedGenresDtos;
+            response.SelectedMovieTheaters = movieDto.MovieTheaters;
+            response.NonSelectedMovieTheaters = nonSelectedMovieTheatersDto;
+            response.Actors = movieDto.Actors;
+
+            return response;
+        }
+
+        public async Task<bool> Edit(int id, MovieCreateDto dto)
+        {
+            var movie = await _dbContext.Movies
+                .Include(x => x.MoviesActors)
+                .Include(x => x.MovieTheatersMovies)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (movie is null)
+            {
+                return false;
+            }
+
+            movie = _mapper.Map(dto, movie);
+
+            if (dto.Poster != null)
+            {
+                movie.Poster = await _fileStorageService
+                    .EditFile(containerName, 
+                                dto.Poster, 
+                                movie.Poster);
+            }
+
+            AnnotateActorsOrder(movie);
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
         private void AnnotateActorsOrder(Movie movie)
         {
             if(movie.MoviesActors != null)
