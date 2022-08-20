@@ -39,7 +39,8 @@ namespace filmwebclone_API.Helpers
             CreateMap<Movie, MovieDto>()
                 .ForMember(x => x.Genres, options => options.MapFrom(MapMoviesGenres))
                 .ForMember(x => x.MovieTheaters, options => options.MapFrom(MapMoviesMovieTheaters))
-                .ForMember(x => x.Actors, options => options.MapFrom(MapMoviesActors));
+                .ForMember(x => x.Actors, options => options.MapFrom(MapMoviesActors))
+                .ReverseMap();
         }
 
         private List<GenreDto> MapMoviesGenres(Movie movie, MovieDto movieDto) 

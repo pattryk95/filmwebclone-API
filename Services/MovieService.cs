@@ -141,6 +141,7 @@ namespace filmwebclone_API.Services
         {
             var movie = await _dbContext.Movies
                 .Include(x => x.MoviesActors)
+                .Include(x => x.MoviesGenres)
                 .Include(x => x.MovieTheatersMovies)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -164,6 +165,9 @@ namespace filmwebclone_API.Services
             await _dbContext.SaveChangesAsync();
 
             return true;
+
+
+
         }
 
         private void AnnotateActorsOrder(Movie movie)
