@@ -14,7 +14,7 @@ namespace filmwebclone_API.Models
         public string Trailer { get; set; }
         public bool InTheaters { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public string? Poster { get; set; }
+        public string Poster { get; set; }
 
         public List<GenreDto> Genres { get; set; }
         public List<MovieTheaterDto> MovieTheaters { get; set; }
