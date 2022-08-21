@@ -17,5 +17,7 @@ namespace filmwebclone_API.Services.Interfaces
         Task<MoviePutGetDto> PutGet(int id);
         Task<bool> Edit(int id, MovieCreateDto dto);
         Task<bool> Delete(int id);
+        Task<List<MovieDto>> FilterMovies(FilterMoviesDto filterMoviesDto);
+
     }
 }

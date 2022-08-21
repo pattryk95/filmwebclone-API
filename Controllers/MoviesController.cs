@@ -41,6 +41,14 @@ namespace filmwebclone_API.Controllers
             return Ok(movieDto);
         }
 
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<MovieDto>>> Filter([FromQuery] FilterMoviesDto filterMoviesDto)
+        {
+            var movieDtos = await _movieService.FilterMovies(filterMoviesDto);
+
+            return movieDtos;
+        }
+
         [HttpGet("PostGet")]
         public async Task<ActionResult<MoviePostGetDto>> PostGet()
         {

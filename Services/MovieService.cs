@@ -186,6 +186,41 @@ namespace filmwebclone_API.Services
             return true;
         }
 
+        public async Task<List<MovieDto>> FilterMovies(FilterMoviesDto filterMoviesDto)
+        {
+            var moviesQueryable = _dbContext.Movies.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterMoviesDto.Title))
+            {
+                moviesQueryable = moviesQueryable.Where(x => x.Title.Contains(filterMoviesDto.Title));
+            }
+
+            if (filterMoviesDto.InTheaters)
+            {
+                moviesQueryable = moviesQueryable.Where(x => x.InTheaters);
+            }
+
+            if (filterMoviesDto.Upcoming)
+            {
+                var today = DateTime.Today;
+                moviesQueryable = moviesQueryable.Where(x => x.InTheaters);
+            }
+
+            if (filterMoviesDto.GenreId != 0)
+            {
+                moviesQueryable = moviesQueryable.Where(x => x.MoviesGenres.Select(y => y.GenreId)
+                    .Contains(filterMoviesDto.GenreId));
+            }
+
+            await _httpContext.InsertParametersPaginationInHeader(moviesQueryable);
+            var movies = await moviesQueryable
+                                            .OrderBy(x => x.Title)
+                                            .Paginate(filterMoviesDto.PaginationDto)
+                                            .ToListAsync();
+
+            return _mapper.Map<List<MovieDto>>(movies);
+        }
+
         private void AnnotateActorsOrder(Movie movie)
         {
             if(movie.MoviesActors != null)
