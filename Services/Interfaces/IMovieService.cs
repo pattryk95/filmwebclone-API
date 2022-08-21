@@ -16,5 +16,6 @@ namespace filmwebclone_API.Services.Interfaces
         Task<LandingPageDto> GetAllMovies();
         Task<MoviePutGetDto> PutGet(int id);
         Task<bool> Edit(int id, MovieCreateDto dto);
+        Task<bool> Delete(int id);
     }
 }

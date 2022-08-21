@@ -170,6 +170,22 @@ namespace filmwebclone_API.Services
 
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            var movie = await _dbContext.Movies.FirstOrDefaultAsync(m => m.Id == id);
+            if(movie is null)
+            {
+                return false;
+            }
+
+            _dbContext.Movies.Remove(movie);
+
+            await _dbContext.SaveChangesAsync();
+            await _fileStorageService.DeleteFile(movie.Poster, containerName);
+
+            return true;
+        }
+
         private void AnnotateActorsOrder(Movie movie)
         {
             if(movie.MoviesActors != null)

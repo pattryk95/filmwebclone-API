@@ -76,11 +76,23 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateMovie([FromForm] MovieCreateDto movieCreateDto)
+        public async Task<IActionResult> CreateMovie([FromForm] MovieCreateDto movieCreateDto)
         {
             var movieId = await _movieService.Create(movieCreateDto);
 
             return Created($"api/movies/{movieId}", movieId);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var isDeleted = await _movieService.Delete(id);
+
+            if (isDeleted == false)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }
