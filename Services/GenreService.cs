@@ -20,12 +20,21 @@ namespace filmwebclone_API.Services
             _httpContext = httpContext.HttpContext;
         }
 
-        public async Task<IEnumerable<GenreDto>> GetAll(PaginationDto paginationDto)
+        public async Task<IEnumerable<GenreDto>> GetPaginated(PaginationDto paginationDto)
         {
             var queryable = _dbContext.Genres.AsQueryable();
             await _httpContext.InsertParametersPaginationInHeader(queryable);
 
             var genres = await queryable.OrderBy(x => x.Name).Paginate(paginationDto).ToListAsync();
+            var genresDto = _mapper.Map<List<GenreDto>>(genres);
+
+            return genresDto;
+        }
+
+        public async Task<IEnumerable<GenreDto>> GetAll()
+        {
+
+            var genres = await _dbContext.Genres.OrderBy(x => x.Name).ToListAsync();
             var genresDto = _mapper.Map<List<GenreDto>>(genres);
 
             return genresDto;

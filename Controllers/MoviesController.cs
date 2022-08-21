@@ -46,7 +46,7 @@ namespace filmwebclone_API.Controllers
         {
             var movieDtos = await _movieService.FilterMovies(filterMoviesDto);
 
-            return movieDtos;
+             return movieDtos;
         }
 
         [HttpGet("PostGet")]

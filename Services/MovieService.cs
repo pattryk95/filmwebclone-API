@@ -203,7 +203,7 @@ namespace filmwebclone_API.Services
             if (filterMoviesDto.Upcoming)
             {
                 var today = DateTime.Today;
-                moviesQueryable = moviesQueryable.Where(x => x.InTheaters);
+                moviesQueryable = moviesQueryable.Where(x => x.ReleaseDate > today);
             }
 
             if (filterMoviesDto.GenreId != 0)

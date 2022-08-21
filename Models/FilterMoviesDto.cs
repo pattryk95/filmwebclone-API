@@ -14,7 +14,7 @@ namespace filmwebclone_API.Models
         { 
             get { return new PaginationDto() { PageNumber = Page, RecordsPerPage = RecordsPerPage }; } 
         }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public int GenreId { get; set; }
         public bool InTheaters { get; set; }
         public bool Upcoming { get; set; }

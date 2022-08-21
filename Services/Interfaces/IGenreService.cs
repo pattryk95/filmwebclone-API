@@ -10,7 +10,8 @@ namespace filmwebclone_API.Services.Interfaces
 {
     public interface IGenreService
     {
-        Task<IEnumerable<GenreDto>> GetAll(PaginationDto paginationDto);
+        Task<IEnumerable<GenreDto>> GetPaginated(PaginationDto paginationDto);
+        Task<IEnumerable<GenreDto>> GetAll();
         Task<GenreDto> GetGenreById(int id);
         Task<int> Create(GenreCreateDto genreCreateDto);
         Task<bool> Edit(int id, GenreCreateDto dto);
