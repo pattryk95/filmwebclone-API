@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace filmwebclone_API.Entities
 {
-    public class FilmwebCloneContext : DbContext
+    public class FilmwebCloneContext : IdentityDbContext
     {
         public FilmwebCloneContext(DbContextOptions<FilmwebCloneContext> options) : base(options)
         {
@@ -54,6 +55,8 @@ namespace filmwebclone_API.Entities
 
             modelBuilder.Entity<MoviesGenres>().HasKey(c => new { c.GenreId, c.MovieId });
             modelBuilder.Entity<MovieTheatersMovies>().HasKey(c=> new {c.MovieTheaterId, c.MovieId});
+
+            base.OnModelCreating(modelBuilder);
 
         }
     }
