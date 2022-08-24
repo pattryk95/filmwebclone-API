@@ -28,7 +28,7 @@ namespace filmwebclone_API.Controllers
             [FromBody] UserCredentials userCredentials)
         {
             var user = new IdentityUser { UserName = userCredentials.Email, Email = userCredentials.Email };
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, userCredentials.Password);
 
             if (result.Succeeded)
             {
