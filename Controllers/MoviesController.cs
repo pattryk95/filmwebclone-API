@@ -1,6 +1,8 @@
 ﻿using filmwebclone_API.Models;
 using filmwebclone_API.Services;
 using filmwebclone_API.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace filmwebclone_API.Controllers
 {
     [Route("api/movies")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
@@ -21,6 +24,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<LandingPageDto>>> GetAll()
         {
             var landingPageDto = await _movieService.GetAllMovies();
@@ -29,6 +33,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<MovieDto>> GetMovie([FromRoute] int id)
         {
             var movieDto = await _movieService.GetMovieById(id);
@@ -42,6 +47,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet("filter")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<MovieDto>>> Filter([FromQuery] FilterMoviesDto filterMoviesDto)
         {
             var movieDtos = await _movieService.FilterMovies(filterMoviesDto);

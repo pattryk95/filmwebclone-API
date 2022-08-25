@@ -24,8 +24,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<AuthenticationResponse>> Create(
-            [FromBody] UserCredentials userCredentials)
+        public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCredentials userCredentials)
         {
             var user = new IdentityUser { UserName = userCredentials.Email, Email = userCredentials.Email };
             var result = await _userManager.CreateAsync(user, userCredentials.Password);
