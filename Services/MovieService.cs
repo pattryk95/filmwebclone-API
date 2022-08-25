@@ -3,6 +3,7 @@ using filmwebclone_API.Entities;
 using filmwebclone_API.Helpers;
 using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,15 @@ namespace filmwebclone_API.Services
         private readonly HttpContext _httpContext;
         private readonly IFileStorageService _fileStorageService;
         private readonly string containerName = "movies";
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public MovieService(FilmwebCloneContext dbContext, IMapper mapper, IHttpContextAccessor httpContext, IFileStorageService fileStorageService)
+        public MovieService(FilmwebCloneContext dbContext, IMapper mapper, IHttpContextAccessor httpContext, IFileStorageService fileStorageService, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _httpContext = httpContext.HttpContext;
             _fileStorageService = fileStorageService;
+            _userManager = userManager;
 
         }
 
@@ -65,7 +68,32 @@ namespace filmwebclone_API.Services
             {
                 return null;
             }
+
+            var averageVote = 0.0;
+            var userVote = 0;
+
+            if(await _dbContext.Ratings.AnyAsync(x=> x.MovieId == id))
+            {
+                averageVote = await _dbContext.Ratings.Where(x => x.MovieId == id).AverageAsync(x => x.Rate);
+
+                if (_httpContext.User.Identity.IsAuthenticated)
+                {
+                    var email = _httpContext.User.Claims.FirstOrDefault(x => x.Type == "email").Value;
+                    var user = await _userManager.FindByEmailAsync(email);
+                    var userId = user.Id;
+
+                    var ratingDb = await _dbContext.Ratings.FirstOrDefaultAsync(x=>x.MovieId == id && x.UserId == userId);
+
+                    if (ratingDb != null)
+                    {
+                        userVote = ratingDb.Rate; 
+                    }
+                }
+            }
+
             var movieDto = _mapper.Map<MovieDto>(movie);
+            movieDto.AverageVote = averageVote;
+            movieDto.UserVote = userVote;
             movieDto.Actors = movieDto.Actors.OrderBy(x=> x.Order).ToList();
             return movieDto;
         }
