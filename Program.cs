@@ -48,6 +48,7 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IMovietheaterService, MovietheaterService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddSingleton(provider => new MapperConfiguration(config =>

@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace filmwebclone_API.Controllers
 {
-    [ApiController]
     [Route("api/ratings")]
+    [ApiController]
     public class RatingsController : ControllerBase
     {
         private readonly IRatingService _ratingService;
@@ -23,7 +23,7 @@ namespace filmwebclone_API.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> Post([FromForm] RatingDto ratingDto)
+        public async Task<ActionResult> Post([FromBody] RatingDto ratingDto)
         {
             var isAdded = await _ratingService.Add(ratingDto);
 
