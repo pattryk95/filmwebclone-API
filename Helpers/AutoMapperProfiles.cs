@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using filmwebclone_API.Entities;
 using filmwebclone_API.Models;
+using Microsoft.AspNetCore.Identity;
 using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,8 @@ namespace filmwebclone_API.Helpers
                 .ForMember(x => x.MovieTheaters, options => options.MapFrom(MapMoviesMovieTheaters))
                 .ForMember(x => x.Actors, options => options.MapFrom(MapMoviesActors))
                 .ReverseMap();
+
+            CreateMap<IdentityUser, UserDto>();
         }
 
         private List<GenreDto> MapMoviesGenres(Movie movie, MovieDto movieDto) 
