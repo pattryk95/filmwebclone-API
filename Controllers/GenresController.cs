@@ -1,11 +1,14 @@
 ﻿using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace filmwebclone_API.Controllers
 {
     [Route("api/genres")]
     [ApiController] // for model validation
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
     public class GenresController : ControllerBase
     {
         private readonly IGenreService _genreService;
@@ -23,6 +26,7 @@ namespace filmwebclone_API.Controllers
         }
 
         [HttpGet("all")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GenreDto>>> GetAll()
         {
             var genresDto = await _genreService.GetAll();

@@ -1,5 +1,7 @@
 ﻿using filmwebclone_API.Models;
 using filmwebclone_API.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace filmwebclone_API.Controllers
 {
     [Route("api/movietheaters")]
     [ApiController] // for model validation
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
     public class MovieTheatersController : ControllerBase
     {
         private readonly IMovietheaterService _movietheaterService;
